@@ -66,4 +66,23 @@ public class ZulaportCutthroatTest extends CardTestPlayerBase {
 
     }
 
+    @Test
+    public void testNantukoHuskSacrifice() {
+        addCard(Zone.BATTLEFIELD, playerA, "Zulaport Cutthroat", 1);
+
+        // Sacrifice a creature: Nantuko Husk gets +2/+2 until end of turn.
+        addCard(Zone.BATTLEFIELD, playerA, "Nantuko Husk", 1);
+
+        activateAbility(1, PhaseStep.PRECOMBAT_MAIN, playerA, "Sacrifice a creature");
+        setChoice(playerA, "Zulaport Cutthroat");
+        setStopAt(1, PhaseStep.BEGIN_COMBAT);
+
+        execute();
+
+        assertPowerToughness(playerA, "Nantuko Husk", 4, 4);
+        assertGraveyardCount(playerA, "Zulaport Cutthroat", 1);
+        assertLife(playerA, 21);
+        assertLife(playerB, 21);
+    }
+
 }
